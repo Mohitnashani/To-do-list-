@@ -15,6 +15,7 @@ body {
     height: 100vh;
 }
 
+
 /* Container to hold the form */
 .container {
     background-color: rgba(255, 255, 255, 0.9);
@@ -32,6 +33,11 @@ h1 {
     font-weight: 600;
     margin-bottom: 20px;
     font-size: 24px;
+}
+h2{
+    font-weight:300;
+    font-size:15px;
+    
 }
 
 /* Form layout */
