@@ -4,26 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Prioritization Tool</title>
-    <!-- Link to external CSS file -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-tasks"></i> Task Prioritization Tool</h1><h2>Everyday buddy</h2>
-        <form action="/submit_task" method="POST">
-            <!-- Task Name Field -->
+        <h1><i class="fas fa-tasks"></i> Task Prioritization Tool</h1>
+        <h2>Your everyday buddy</h2>
+
+        <!-- Form to add new tasks -->
+        <form action="/add" method="POST">
             <label for="task_name"><i class="fas fa-tasks"></i> Task Name:</label>
             <input type="text" id="task_name" name="task_name" placeholder="Enter task name" required>
 
-            <!-- Due Date Field -->
             <label for="due_date"><i class="fas fa-calendar-alt"></i> Due Date:</label>
             <input type="date" id="due_date" name="due_date" required>
 
-            <!-- Priority Field -->
             <label for="priority"><i class="fas fa-exclamation-circle"></i> Priority:</label>
             <select id="priority" name="priority" required>
                 <option value="High">High</option>
@@ -31,10 +28,30 @@
                 <option value="Low">Low</option>
             </select>
 
-            <!-- Submit Button -->
             <button type="submit"><i class="fas fa-paper-plane"></i> Submit Task</button>
         </form>
+
+        <!-- Task List -->
+        <h3>Task List</h3>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>{{ task['task_name'] }}</strong> - Due: {{ task['due_date'] }} - Priority: {{ task['priority'] }}
+                    {% if task['done'] %}
+                        <span class="completed">Completed</span>
+                    {% else %}
+                        <form action="/finish/{{ loop.index0 }}" method="POST" style="display:inline;">
+                            <button type="submit">Mark as Done</button>
+                        </form>
+                    {% endif %}
+                    <a href="/delete/{{ loop.index0 }}" class="delete">Delete</a>
+                </li>
+            {% else %}
+                <li>No tasks yet! Add one above.</li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>
+
 
